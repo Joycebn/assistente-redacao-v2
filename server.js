@@ -10,25 +10,30 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/api/chat', async (req, res) => {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'Chave não configurada.' });
 
   const { system, userMessage } = req.body;
-  const prompt = system ? `${system}\n\n${userMessage}` : userMessage;
 
   try {
-    const r = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-      }
-    );
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1024,
+        system: system || '',
+        messages: [{ role: 'user', content: userMessage }]
+      })
+    });
     const data = await r.json();
-    console.log('Gemini status:', r.status, JSON.stringify(data).slice(0,200));
-    if (!r.ok) return res.status(r.status).json({ error: data?.error?.message || 'Erro Gemini' });
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+    console.log('Anthropic status:', r.status, JSON.stringify(data).slice(0,200));
+    if (!r.ok) return res.status(r.status).json({ error: data?.error?.message || 'Erro API' });
+    const text = data?.content?.[0]?.text ?? '';
     res.json({ text });
   } catch (err) {
     console.error('ERRO:', err.message);
