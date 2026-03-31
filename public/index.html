@@ -658,7 +658,7 @@ function escolherTipoContexto(tipo) {
   // Busca ideias da IA
   const nomes = { historico:'historicamente', atual:'no contexto atual', filosofo:'com frase de filósofo ou pensador', definicao:'definindo o termo', dado:'com dado ou estatística', cotidiano:'com observação do cotidiano' };
   pedirIdeia(
-    'Você é professor de redação do ensino médio. Responda APENAS com lista numerada de 1 a 4 sem introdução. Cada item deve ser uma frase de contextualização completa e direta, sem aspas.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4, sem introdução, sem aspas. Cada item é uma frase de contextualização completa.',
     `Crie 4 frases de contextualização ${nomes[tipo]} para uma redação sobre: "${E.tema}". Cada frase deve ter no máximo 2 linhas.`
   ).then(resp => {
     renderEtapa1_contexto(parseLista(resp));
@@ -673,7 +673,7 @@ function usarSugestaoContexto(s) {
   // Re-busca sugestões para manter lista visível
   const nomes = { historico:'historicamente', atual:'no contexto atual', filosofo:'com frase de filósofo', definicao:'definindo o termo', dado:'com dado ou estatística', cotidiano:'com observação do cotidiano' };
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4 sem introdução.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4, sem introdução.',
     `Crie 4 frases de contextualização ${nomes[E.intro.tipoContexto]||''} para redação sobre: "${E.tema}". Máximo 2 linhas cada.`
   ).then(resp => renderEtapa1_contexto(parseLista(resp))).catch(() => renderEtapa1_contexto([]));
 }
@@ -736,7 +736,7 @@ function escolherConectivoProblema(c) {
   E.intro.conectivoProblema = c;
   renderEtapa2_problema(null);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4 sem introdução. Não inclua o conectivo nas frases.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4, sem introdução. Não inclua o conectivo nas frases.',
     `Crie 4 formas de apresentar o problema principal de uma redação sobre "${E.tema}". Começa após o conectivo "${c}". Cada frase: máximo 2 linhas.`
   ).then(r => renderEtapa2_problema(parseLista(r))).catch(() => renderEtapa2_problema([]));
 }
@@ -744,7 +744,7 @@ function usarSugestaoProblema(s) {
   E.intro.textoProblema = s;
   renderEtapa2_problema([]);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4.',
     `4 formas de apresentar o problema de "${E.tema}" após o conectivo "${E.intro.conectivoProblema}". Máximo 2 linhas cada.`
   ).then(r => renderEtapa2_problema(parseLista(r))).catch(() => renderEtapa2_problema([]));
 }
@@ -808,7 +808,7 @@ function escolherConectivoTese(c) {
   E.intro.conectivoTese = c;
   renderEtapa3_tese(null);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4. Não inclua o conectivo nas frases.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4. Não inclua o conectivo nas frases.',
     `Crie 4 teses diferentes para redação sobre "${E.tema}". Varie: a favor, contra, urgência de mudança. Após "${c}". Máximo 2 linhas cada.`
   ).then(r => renderEtapa3_tese(parseLista(r))).catch(() => renderEtapa3_tese([]));
 }
@@ -816,7 +816,7 @@ function usarSugestaoTese(s) {
   E.intro.textoTese = s;
   renderEtapa3_tese([]);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4.',
     `4 teses para "${E.tema}" após "${E.intro.conectivoTese}". Máximo 2 linhas cada.`
   ).then(r => renderEtapa3_tese(parseLista(r))).catch(() => renderEtapa3_tese([]));
 }
@@ -890,7 +890,7 @@ function escolherConectivoArgs(c) {
   E.intro.conectivoArgs = c;
   renderEtapa4_args(null);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4. Cada item é apenas UM argumento curto (fator ou causa), não dois.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4. Cada item é apenas UM argumento curto (fator ou causa), não dois.',
     `Sugira 4 argumentos/causas diferentes para uma redação sobre "${E.tema}" com tese "${E.intro.textoTese}". Cada item: máximo 1 linha.`
   ).then(r => renderEtapa4_args(parseLista(r))).catch(() => renderEtapa4_args([]));
 }
@@ -898,7 +898,7 @@ function usarArg1(s) {
   E.intro.arg1 = s;
   renderEtapa4_args([]);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4. Cada item é apenas UM argumento curto.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4. Cada item é apenas UM argumento curto.',
     `4 argumentos/causas para redação sobre "${E.tema}". Máximo 1 linha cada.`
   ).then(r => renderEtapa4_args(parseLista(r))).catch(() => renderEtapa4_args([]));
 }
@@ -961,7 +961,7 @@ function escolherConectivoD1(c) {
   E.dev1.conectivoAbertura = c;
   renderEtapa5_dev1abertura(null);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4. Cada item é uma explicação completa de 2 a 3 linhas.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4. Cada item é uma explicação de 2 a 3 linhas, com palavras fáceis.',
     `Crie 4 formas de explicar o argumento "${E.intro.arg1}" em uma redação sobre "${E.tema}". Cada explicação deve mostrar por que esse é um problema real e importante.`
   ).then(r => renderEtapa5_dev1abertura(parseLista(r))).catch(() => renderEtapa5_dev1abertura([]));
 }
@@ -969,7 +969,7 @@ function usarSugestaoD1(s) {
   E.dev1.textoDesenv = s;
   renderEtapa5_dev1abertura([]);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4.',
     `4 formas de explicar o argumento "${E.intro.arg1}" sobre "${E.tema}". 2-3 linhas cada.`
   ).then(r => renderEtapa5_dev1abertura(parseLista(r))).catch(() => renderEtapa5_dev1abertura([]));
 }
@@ -1032,7 +1032,7 @@ function escolherConectivoR1(c) {
   E.dev1.conectivoRepertorio = c;
   renderEtapa6_dev1repertorio(null);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4. Cada item é um repertório cultural, dado, pesquisa ou citação de filósofo/autor. Seja específico.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4. Cada item é um dado, pesquisa ou ideia de filósofo. Seja específico e direto.',
     `Sugira 4 repertórios (exemplos, dados, citações de autores, filósofos ou pesquisas) que comprovam o argumento "${E.intro.arg1}" em uma redação sobre "${E.tema}". Comece cada um com "${c}".`
   ).then(r => renderEtapa6_dev1repertorio(parseLista(r))).catch(() => renderEtapa6_dev1repertorio([]));
 }
@@ -1040,7 +1040,7 @@ function usarRepertorioD1(s) {
   E.dev1.textoRepertorio = s;
   renderEtapa6_dev1repertorio([]);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4.',
     `4 repertórios para confirmar "${E.intro.arg1}" sobre "${E.tema}". Comece com "${E.dev1.conectivoRepertorio}".`
   ).then(r => renderEtapa6_dev1repertorio(parseLista(r))).catch(() => renderEtapa6_dev1repertorio([]));
 }
@@ -1103,7 +1103,7 @@ function escolherConectivoD2(c) {
   E.dev2.conectivoAbertura = c;
   renderEtapa7_dev2abertura(null);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4. Cada item é uma explicação de 2 a 3 linhas.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4. Cada item é uma explicação de 2 a 3 linhas, com palavras fáceis.',
     `Crie 4 formas de explicar o argumento "${E.intro.arg2}" em redação sobre "${E.tema}". Diferente do primeiro argumento "${E.intro.arg1}". Mostre por que é um problema real.`
   ).then(r => renderEtapa7_dev2abertura(parseLista(r))).catch(() => renderEtapa7_dev2abertura([]));
 }
@@ -1111,7 +1111,7 @@ function usarSugestaoD2(s) {
   E.dev2.textoDesenv = s;
   renderEtapa7_dev2abertura([]);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4.',
     `4 formas de explicar "${E.intro.arg2}" sobre "${E.tema}". 2-3 linhas cada.`
   ).then(r => renderEtapa7_dev2abertura(parseLista(r))).catch(() => renderEtapa7_dev2abertura([]));
 }
@@ -1174,7 +1174,7 @@ function escolherConectivoR2(c) {
   E.dev2.conectivoRepertorio = c;
   renderEtapa8_dev2repertorio(null);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4. Cada item é um repertório diferente do que seria usado para o argumento 1.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4. Cada item é um dado ou ideia diferente do que foi usado no argumento 1.',
     `Sugira 4 repertórios (dados, pesquisas, citações, exemplos) para confirmar o argumento "${E.intro.arg2}" em redação sobre "${E.tema}". Comece com "${c}".`
   ).then(r => renderEtapa8_dev2repertorio(parseLista(r))).catch(() => renderEtapa8_dev2repertorio([]));
 }
@@ -1182,7 +1182,7 @@ function usarRepertorioD2(s) {
   E.dev2.textoRepertorio = s;
   renderEtapa8_dev2repertorio([]);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4.',
     `4 repertórios para "${E.intro.arg2}" sobre "${E.tema}". Comece com "${E.dev2.conectivoRepertorio}".`
   ).then(r => renderEtapa8_dev2repertorio(parseLista(r))).catch(() => renderEtapa8_dev2repertorio([]));
 }
@@ -1245,7 +1245,7 @@ function escolherConectivoRetomada(c) {
   E.conclusao.conectivoRetomada = c;
   renderEtapa9_conclusaoRetomada(null);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4. Não repita as mesmas palavras da tese original.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4. Não repita as mesmas palavras da tese original.',
     `Crie 4 formas de retomar, na conclusão, o problema de "${E.tema}" abordado nesta redação com tese: "${E.intro.textoTese}". Comece após "${c}". Use palavras diferentes. Máximo 2 linhas.`
   ).then(r => renderEtapa9_conclusaoRetomada(parseLista(r))).catch(() => renderEtapa9_conclusaoRetomada([]));
 }
@@ -1253,7 +1253,7 @@ function usarRetomada(s) {
   E.conclusao.textoRetomada = s;
   renderEtapa9_conclusaoRetomada([]);
   pedirIdeia(
-    'Você é professor de redação. Responda APENAS com lista numerada de 1 a 4.',
+    'Você ajuda alunos do ensino médio a escrever redação. Use frases curtas e simples. Responda APENAS com lista numerada de 1 a 4.',
     `4 formas de retomar o problema de "${E.tema}" na conclusão após "${E.conclusao.conectivoRetomada}". Máximo 2 linhas.`
   ).then(r => renderEtapa9_conclusaoRetomada(parseLista(r))).catch(() => renderEtapa9_conclusaoRetomada([]));
 }
@@ -1321,7 +1321,7 @@ function escolherAcao(a) {
   // Auto-sugerir objetivo
   if (!E.conclusao.textoProposta) {
     pedirIdeia(
-      'Você é professor de redação. Responda com APENAS UMA frase curta de objetivo (para quê), sem introdução.',
+      'Você ajuda alunos do ensino médio a escrever redação. Use palavras simples. Responda com APENAS UMA frase curta de objetivo (para quê), sem introdução.',
       `Complete a proposta de intervenção: "${E.conclusao.agente} ${a}" — escreva apenas o objetivo final (começando com "para que" ou "com o objetivo de"), para uma redação sobre "${E.tema}".`
     ).then(r => {
       E.conclusao.textoProposta = r.replace(/^\d+[\.\)]\s*/,'').trim();
